@@ -1,0 +1,46 @@
+name: Screencast
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/screencast.yml
+      - ui-tests/lite/jupyterlite.screencast.ts
+      - ui-tests/screencast/recorder.ts
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  screencast:
+    name: Record the README screencast
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: prefix-dev/setup-pixi@v0.11.0
+        with:
+          pixi-version: v0.81.0
+          environments: default wasm-build
+          cache: true
+          cache-write: false
+
+      - name: Install the Playwright browser
+        run: |
+          pixi run ui-tests-install
+          pixi run npx playwright install --with-deps chromium
+        working-directory: ui-tests
+
+      - name: Build the JupyterLite site, and record the screencast
+        run: pixi run lite-screencast
+
+      - name: Upload the screencast
+        uses: actions/upload-artifact@v7
+        with:
+          name: xeus-quickjs-screencast
+          path: ui-tests/screencast-results/jupyterlite.mp4
+          if-no-files-found: error
