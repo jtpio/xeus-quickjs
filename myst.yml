@@ -5,6 +5,7 @@ project:
   description: A Jupyter kernel for JavaScript based on QuickJS and xeus
   keywords: [jupyter, kernel, javascript, quickjs, xeus]
   license: BSD-3-Clause
+  github: jtpio/xeus-quickjs
   exclude:
     - README.md
     - ui-tests/**

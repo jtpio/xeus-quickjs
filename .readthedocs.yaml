@@ -1,0 +1,21 @@
+# Read the Docs configuration, see https://docs.readthedocs.com/platform/stable/config-file/v2.html
+version: 2
+
+build:
+  os: ubuntu-24.04
+  tools:
+    # Required with build.jobs, the documentation is built with the pixi environment
+    python: "latest"
+  jobs:
+    create_environment:
+      - asdf plugin add pixi
+      - asdf install pixi 0.81.0
+      - asdf global pixi 0.81.0
+    install:
+      - pixi install --locked
+    build:
+      html:
+        # Build the kernel to execute the notebooks, and the MyST site for its URL on Read the Docs
+        - BASE_URL="/$READTHEDOCS_LANGUAGE/$READTHEDOCS_VERSION" pixi run --locked docs
+        - mkdir --parents $READTHEDOCS_OUTPUT/html/
+        - cp --archive _build/html/. $READTHEDOCS_OUTPUT/html/
