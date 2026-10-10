@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Kernel tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: prefix-dev/setup-pixi@v0.11.0
+        with:
+          pixi-version: v0.81.0
+          environments: default
+          cache: true
+          cache-write: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+
+      - name: Build and install the kernel, and run the tests
+        run: pixi run test
+
+  ui-tests:
+    name: JupyterLab UI tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: prefix-dev/setup-pixi@v0.11.0
+        with:
+          pixi-version: v0.81.0
+          environments: default
+          cache: true
+          cache-write: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+
+      - name: Install the Playwright browser
+        run: |
+          pixi run ui-tests-install
+          pixi run npx playwright install --with-deps chromium
+        working-directory: ui-tests
+
+      - name: Run the UI tests
+        run: pixi run ui-tests
+
+      - name: Upload the Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ui-tests-report
+          path: |
+            ui-tests/playwright-report
+            ui-tests/test-results
+
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: prefix-dev/setup-pixi@v0.11.0
+        with:
+          pixi-version: v0.81.0
+          environments: default
+          cache: true
+          cache-write: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+
+      - name: Build the documentation
+        run: pixi run docs

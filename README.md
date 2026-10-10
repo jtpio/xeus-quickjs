@@ -1,5 +1,8 @@
 # xeus-quickjs
 
+[![CI](https://github.com/jtpio/xeus-quickjs/actions/workflows/ci.yml/badge.svg)](https://github.com/jtpio/xeus-quickjs/actions/workflows/ci.yml)
+[![Try it in JupyterLite](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jtp.io/xeus-quickjs/lab/index.html)
+
 `xeus-quickjs` is a Jupyter kernel for JavaScript based on [QuickJS](https://bellard.org/quickjs/), the small and
 embeddable JavaScript engine by Fabrice Bellard, and on the native implementation of the Jupyter protocol
 [xeus](https://github.com/jupyter-xeus/xeus).

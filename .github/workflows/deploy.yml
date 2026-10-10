@@ -1,0 +1,69 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build the JupyterLite site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: prefix-dev/setup-pixi@v0.11.0
+        with:
+          pixi-version: v0.81.0
+          environments: default wasm-build
+          cache: true
+          cache-write: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+
+      - name: Build the kernel for WebAssembly, and the JupyterLite site
+        run: pixi run -e wasm-build lite-build
+
+      - name: Install the Playwright browser
+        run: |
+          pixi run ui-tests-install
+          pixi run npx playwright install --with-deps chromium
+        working-directory: ui-tests
+
+      - name: Test the JupyterLite site
+        run: pixi run lite-ui-tests
+
+      - name: Upload the Playwright results
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lite-ui-tests-results
+          path: ui-tests/test-results
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./_output
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
