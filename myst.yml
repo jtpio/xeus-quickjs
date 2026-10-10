@@ -11,7 +11,7 @@ project:
     - ui-tests/**
     - thirdparty/**
   toc:
-    - file: docs/index.md
+    - file: index.md
     - file: docs/installation.md
     - file: docs/usage.md
     - file: docs/reference.md
