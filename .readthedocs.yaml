@@ -17,5 +17,6 @@ build:
       html:
         # Build the kernel to execute the notebooks, and the MyST site for its URL on Read the Docs
         - BASE_URL="/$READTHEDOCS_LANGUAGE/$READTHEDOCS_VERSION" pixi run --locked docs
-        - mkdir --parents $READTHEDOCS_OUTPUT/html/
-        - cp --archive _build/html/. $READTHEDOCS_OUTPUT/html/
+        # Moved, Read the Docs fails the builds leaving files in its old output directory, _build/html
+        - mkdir --parents $READTHEDOCS_OUTPUT
+        - mv _build/html $READTHEDOCS_OUTPUT/html
