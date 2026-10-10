@@ -7,6 +7,8 @@ const baseConfig = require('@jupyterlab/galata/lib/playwright-config');
 
 module.exports = {
   ...baseConfig,
+  // The JupyterLite tests in lite/ have their own configuration
+  testDir: './tests',
   // The kernel runs one cell at a time: keep the tests sequential
   workers: 1,
   webServer: {

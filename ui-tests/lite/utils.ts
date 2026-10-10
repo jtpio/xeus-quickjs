@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
 
-export const KERNEL_NAME = 'JavaScript (QuickJS)';
+export const KERNEL_NAME = 'JavaScript (xquickjs)';
 
 /**
  * Open JupyterLite, and a new notebook with the kernel from the launcher.

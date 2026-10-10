@@ -28,7 +28,7 @@ From a clone of the repository:
 pixi run lab
 ```
 
-[`pixi run lab`](installation.md) builds the kernel, installs it in a local environment, and starts JupyterLab. Create a notebook with the **JavaScript (QuickJS)** kernel, or open one of the example notebooks of the `notebooks` folder.
+[`pixi run lab`](installation.md) builds the kernel, installs it in a local environment, and starts JupyterLab. Create a notebook with the **JavaScript (xquickjs)** kernel, or open one of the example notebooks of the `notebooks` folder.
 
 ```javascript
 const greeting = 'Hello';

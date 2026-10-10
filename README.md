@@ -1,5 +1,8 @@
 # xeus-quickjs
 
+[![CI](https://github.com/jtpio/xeus-quickjs/actions/workflows/ci.yml/badge.svg)](https://github.com/jtpio/xeus-quickjs/actions/workflows/ci.yml)
+[![Try it in JupyterLite](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jtp.io/xeus-quickjs/lab/index.html)
+
 `xeus-quickjs` is a Jupyter kernel for JavaScript based on [QuickJS](https://bellard.org/quickjs/), the small and
 embeddable JavaScript engine by Fabrice Bellard, and on the native implementation of the Jupyter protocol
 [xeus](https://github.com/jupyter-xeus/xeus).
@@ -65,7 +68,7 @@ In JupyterLite, the kernel can not be interrupted, and `os.exec` and `os.Worker`
 
 ## Usage
 
-Launch JupyterLab with `jupyter lab`, and create a notebook with the **JavaScript (QuickJS)** kernel. The
+Launch JupyterLab with `jupyter lab`, and create a notebook with the **JavaScript (xquickjs)** kernel. The
 `notebooks` folder has examples of all the features:
 
 - [xeus-quickjs.ipynb](notebooks/xeus-quickjs.ipynb): a tour of the kernel

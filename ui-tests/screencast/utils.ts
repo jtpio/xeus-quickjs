@@ -9,7 +9,7 @@ import {
   Recorder
 } from './recorder';
 
-export const KERNEL_NAME = 'JavaScript (QuickJS)';
+export const KERNEL_NAME = 'JavaScript (xquickjs)';
 
 export const DIRECTORY = 'screencasts';
 

@@ -1,5 +1,5 @@
 {
-  "display_name": "JavaScript (QuickJS)",
+  "display_name": "JavaScript (xquickjs)",
   "argv": [
       "@XEUS_QUICKJS_KERNELSPEC_PATH@xquickjs",
       "-f",

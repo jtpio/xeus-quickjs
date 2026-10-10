@@ -1,7 +1,7 @@
 import { expect, IJupyterLabPageFixture, test } from '@jupyterlab/galata';
 import { Locator } from '@playwright/test';
 
-const KERNEL_NAME = 'JavaScript (QuickJS)';
+const KERNEL_NAME = 'JavaScript (xquickjs)';
 
 /**
  * Open a new notebook with the kernel, from the launcher.
