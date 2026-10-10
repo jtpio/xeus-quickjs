@@ -11,6 +11,8 @@ QuickJS supports the latest ECMAScript features, like modules, async generators,
 kernel is a single native executable, with no dependency on Node.js or a web browser. It also runs in the browser with
 JupyterLite, compiled to WebAssembly.
 
+https://github.com/user-attachments/assets/4102008f-ed76-42eb-865f-251c34ce5855
+
 ## Features
 
 - Code execution, with the values displayed like in the Node.js REPL, cells which can be executed again, and
