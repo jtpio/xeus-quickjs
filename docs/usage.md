@@ -2,7 +2,7 @@
 title: Usage
 ---
 
-Start JupyterLab, and create a notebook or a console with the **JavaScript (QuickJS)** kernel. The example notebooks of the `notebooks` folder show all the features below.
+Start JupyterLab, and create a notebook or a console with the **JavaScript (xquickjs)** kernel. The example notebooks of the `notebooks` folder show all the features below.
 
 ## Code execution
 

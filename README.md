@@ -68,7 +68,7 @@ In JupyterLite, the kernel can not be interrupted, and `os.exec` and `os.Worker`
 
 ## Usage
 
-Launch JupyterLab with `jupyter lab`, and create a notebook with the **JavaScript (QuickJS)** kernel. The
+Launch JupyterLab with `jupyter lab`, and create a notebook with the **JavaScript (xquickjs)** kernel. The
 `notebooks` folder has examples of all the features:
 
 - [xeus-quickjs.ipynb](notebooks/xeus-quickjs.ipynb): a tour of the kernel
