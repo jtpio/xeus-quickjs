@@ -1,0 +1,30 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  title: xeus-quickjs
+  description: A Jupyter kernel for JavaScript based on QuickJS and xeus
+  keywords: [jupyter, kernel, javascript, quickjs, xeus]
+  license: BSD-3-Clause
+  exclude:
+    - README.md
+    - ui-tests/**
+    - thirdparty/**
+  toc:
+    - file: docs/index.md
+    - file: docs/installation.md
+    - file: docs/usage.md
+    - file: docs/reference.md
+    - title: Examples
+      children:
+        - file: notebooks/xeus-quickjs.ipynb
+        - file: notebooks/rich-display.ipynb
+        - file: notebooks/async.ipynb
+        - file: notebooks/modules.ipynb
+        - file: notebooks/files.ipynb
+        - file: notebooks/widgets.ipynb
+        - file: notebooks/mandelbrot.ipynb
+    - file: docs/development.md
+site:
+  template: book-theme
+  options:
+    logo_text: xeus-quickjs

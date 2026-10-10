@@ -1,0 +1,14 @@
+{
+  "display_name": "JavaScript (QuickJS)",
+  "argv": [
+      "@XEUS_QUICKJS_KERNELSPEC_PATH@xquickjs",
+      "-f",
+      "{connection_file}"
+  ],
+  "language": "javascript",
+  "interrupt_mode": "message",
+  "metadata": {
+    "debugger": false
+  },
+  "kernel_protocol_version": "5.6"
+}

@@ -1,0 +1,27 @@
+# Build
+build/
+build-wasm/
+
+# JupyterLite
+_output/
+.jupyterlite.doit.db
+
+# pixi environments
+.pixi/
+*.egg-info
+
+# Jupyter
+.ipynb_checkpoints/
+
+# UI tests and screencasts
+ui-tests/node_modules/
+ui-tests/test-results/
+ui-tests/playwright-report/
+ui-tests/screencast-results/
+
+# Documentation
+_build/
+
+# Python
+__pycache__/
+.pytest_cache/

@@ -1,0 +1,42 @@
+############################################################################
+# Copyright (c) 2026, Jeremy Tuloup                                        #
+#                                                                          #
+# Distributed under the terms of the BSD 3-Clause License.                 #
+#                                                                          #
+# The full license is in the file LICENSE, distributed with this software. #
+############################################################################
+
+# xeus-quickjs cmake module
+# This module sets the following variables in your project::
+#
+#   xeus-quickjs_FOUND - true if xeus-quickjs found on the system
+#   xeus-quickjs_INCLUDE_DIRS - the directory containing xeus-quickjs headers
+#   xeus-quickjs_LIBRARY - the library for dynamic linking
+#   xeus-quickjs_STATIC_LIBRARY - the library for static linking
+
+@PACKAGE_INIT@
+
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR};${CMAKE_MODULE_PATH}")
+
+@XEUS_QUICKJS_CONFIG_CODE@
+
+include(CMakeFindDependencyMacro)
+
+find_dependency(xeus @xeus_REQUIRED_VERSION@)
+
+if (NOT TARGET xeus-quickjs AND NOT TARGET xeus-quickjs-static)
+    include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
+
+    if (TARGET xeus-quickjs AND TARGET xeus-quickjs-static)
+        get_target_property(@PROJECT_NAME@_INCLUDE_DIR xeus-quickjs INTERFACE_INCLUDE_DIRECTORIES)
+        get_target_property(@PROJECT_NAME@_LIBRARY xeus-quickjs LOCATION)
+        get_target_property(@PROJECT_NAME@_STATIC_LIBRARY xeus-quickjs-static LOCATION)
+    elseif (TARGET xeus-quickjs)
+        get_target_property(@PROJECT_NAME@_INCLUDE_DIR xeus-quickjs INTERFACE_INCLUDE_DIRECTORIES)
+        get_target_property(@PROJECT_NAME@_LIBRARY xeus-quickjs LOCATION)
+    elseif (TARGET xeus-quickjs-static)
+        get_target_property(@PROJECT_NAME@_INCLUDE_DIR xeus-quickjs-static INTERFACE_INCLUDE_DIRECTORIES)
+        get_target_property(@PROJECT_NAME@_STATIC_LIBRARY xeus-quickjs-static LOCATION)
+        set(@PROJECT_NAME@_LIBRARY ${@PROJECT_NAME@_STATIC_LIBRARY})
+    endif ()
+endif ()

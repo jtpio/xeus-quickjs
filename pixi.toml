@@ -1,0 +1,87 @@
+[workspace]
+name = "xeus-quickjs"
+description = "Jupyter kernel for JavaScript based on QuickJS and the native implementation of the Jupyter protocol xeus"
+channels = ["conda-forge"]
+platforms = ["linux-64", "emscripten-wasm32"]
+
+# The kernel builds QuickJS from source, see CMakeLists.txt
+
+[target.linux-64.dependencies]
+# Build dependencies
+cmake = ">=3.24"
+ninja = "*"
+cxx-compiler = "*"
+c-compiler = "*"
+# Host dependencies
+xeus = ">=6.0.6,<7"
+xeus-zmq = ">=4.0,<5"
+nlohmann_json = ">=3.12,<4"
+# To try it out
+jupyterlab = ">=4.6,<5"
+jupyterlab_widgets = ">=3.0.17,<4"
+# Test dependencies
+pytest = "*"
+jupyter_kernel_test = ">=0.7"
+nbclient = "*"
+# UI tests and screencasts
+nodejs = ">=22"
+ffmpeg = "*"
+# Documentation
+mystmd = ">=1.10"
+
+[tasks]
+configure = { cmd = "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$CONDA_PREFIX -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DCMAKE_INSTALL_LIBDIR=lib", outputs = ["build/build.ninja"] }
+build = { cmd = "cmake --build build", depends-on = ["configure"] }
+install = { cmd = "cmake --install build", depends-on = ["build"] }
+test = { cmd = "pytest test -v", depends-on = ["install"] }
+lab = { cmd = "jupyter lab", depends-on = ["install"] }
+ui-tests-install = { cmd = "npm install", cwd = "ui-tests" }
+ui-tests = { cmd = "npx playwright test", cwd = "ui-tests", depends-on = ["install", "ui-tests-install"] }
+screencasts = { cmd = "npx playwright test --config playwright-screencast.config.js", cwd = "ui-tests", depends-on = ["install", "ui-tests-install"] }
+lite-ui-tests = { cmd = "npx playwright test --config playwright-lite.config.js", cwd = "ui-tests", depends-on = ["ui-tests-install", { task = "lite-build", environment = "wasm-build" }] }
+lite-screencast = { cmd = "npx playwright test --config playwright-lite-screencast.config.js", cwd = "ui-tests", depends-on = ["ui-tests-install", { task = "lite-build", environment = "wasm-build" }] }
+docs = { cmd = "myst build --html --execute", depends-on = ["install"] }
+docs-serve = { cmd = "myst start --execute", depends-on = ["install"] }
+
+# WebAssembly build, for JupyterLite
+# ==================================
+
+# The libraries of the kernel, built for emscripten-wasm32
+[feature.wasm-host]
+platforms = ["emscripten-wasm32"]
+channels = ["https://prefix.dev/emscripten-forge-4x", "conda-forge"]
+
+[feature.wasm-host.dependencies]
+xeus = ">=6.0.6,<7"
+xeus-lite = ">=5.0,<6"
+nlohmann_json = ">=3.12,<4"
+nlohmann_json-abi = "*"
+
+# The emscripten toolchain, and JupyterLite
+[feature.wasm-build]
+platforms = ["linux-64"]
+channels = ["https://prefix.dev/emscripten-forge-4x", "conda-forge"]
+
+[feature.wasm-build.dependencies]
+cmake = ">=3.24"
+ninja = "*"
+emscripten_emscripten-wasm32 = "*"
+jupyterlite-core = ">=0.8.6,<0.9"
+jupyterlite-xeus = ">=5.1,<6"
+jupyterlab = ">=4.6,<5"
+jupyterlab_widgets = ">=3.0.17,<4"
+jupyter_server = "*"
+
+[feature.wasm-build.tasks]
+wasm-host = "$PIXI_EXE install --environment wasm-host --platform emscripten-wasm32"
+wasm-configure = { cmd = "emcmake cmake -S . -B build-wasm -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$WASM_PREFIX -DCMAKE_FIND_ROOT_PATH=$WASM_PREFIX -DCMAKE_INSTALL_PREFIX=$WASM_PREFIX", depends-on = ["wasm-host"], outputs = ["build-wasm/build.ninja"], env = { CFLAGS = "", CXXFLAGS = "", LDFLAGS = "" } }
+wasm-build = { cmd = "cmake --build build-wasm && cmake --install build-wasm", depends-on = ["wasm-configure"] }
+lite-build = { cmd = "jupyter lite build --XeusAddon.prefix=$WASM_PREFIX --XeusAddon.default_channels=https://repo.prefix.dev/emscripten-forge-4x --XeusAddon.default_channels=https://repo.prefix.dev/conda-forge --contents notebooks --output-dir _output", depends-on = ["wasm-build"] }
+lite-serve = { cmd = "python -m http.server 8000 --directory _output", depends-on = ["lite-build"] }
+
+[feature.wasm-build.activation.env]
+WASM_PREFIX = "$PIXI_PROJECT_ROOT/.pixi/envs/wasm-host"
+
+[environments]
+wasm-host = { features = ["wasm-host"], no-default-feature = true }
+wasm-build = { features = ["wasm-build"], no-default-feature = true }

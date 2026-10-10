@@ -1,0 +1,14 @@
+{
+  "name": "xeus-quickjs-ui-tests",
+  "version": "1.0.0",
+  "description": "xeus-quickjs integration tests and screencasts in JupyterLab",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "screencast": "playwright test --config playwright-screencast.config.js"
+  },
+  "devDependencies": {
+    "@jupyterlab/galata": "5.6.4",
+    "@playwright/test": "1.64.0"
+  }
+}
