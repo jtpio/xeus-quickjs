@@ -7,7 +7,7 @@ title: xeus-quickjs
 :end-before: https://github.com/user-attachments/assets/
 :::
 
-:::{iframe} https://github.com/user-attachments/assets/4102008f-ed76-42eb-865f-251c34ce5855
+:::{iframe} https://github.com/user-attachments/assets/1baf37bb-121d-4731-875b-766d18476421
 :width: 100%
 :::
 
