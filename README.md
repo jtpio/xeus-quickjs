@@ -12,7 +12,7 @@ QuickJS supports the latest ECMAScript features, like modules, async generators,
 kernel is a single native executable, with no dependency on Node.js or a web browser. It also runs in the browser with
 JupyterLite, compiled to WebAssembly.
 
-https://github.com/user-attachments/assets/4102008f-ed76-42eb-865f-251c34ce5855
+https://github.com/user-attachments/assets/1baf37bb-121d-4731-875b-766d18476421
 
 ## Features
 
@@ -124,7 +124,7 @@ pixi run lite-screencast
 
 We use a shared copyright model that enables all contributors to maintain the copyright on their contributions.
 
-This software is licensed under the BSD-3-Clause license. See the [LICENSE](LICENSE) file for details.
+This software is licensed under the BSD-3-Clause license. See the [LICENSE](./LICENSE) file for details.
 
 The parser of the cells, [acorn](https://github.com/acornjs/acorn), is distributed under the MIT license, see
 [thirdparty/acorn/LICENSE](thirdparty/acorn/LICENSE).

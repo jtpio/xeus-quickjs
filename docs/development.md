@@ -70,11 +70,11 @@ The screencast of the README is a tour of the `xeus-quickjs.ipynb` notebook in J
 pixi run lite-screencast
 ```
 
-The **Screencast** workflow records it on GitHub Actions too, and uploads `jupyterlite.mp4` as an artifact. To update the README, upload the video in a comment of a pull request, and replace the link to the video in the README with the new one.
+The **Screencast** workflow records it on GitHub Actions too, and uploads `jupyterlite.mp4` as an artifact. To update the README and the documentation, upload the video in a comment of a pull request on GitHub, and replace the link to the video in `README.md` and in `index.md` with the new one. The link must open without being logged in to GitHub, for the video to play in the documentation.
 
 ## Documentation
 
-The documentation is built with [MyST](https://mystmd.org), configured in `myst.yml`. The example notebooks are executed with the kernel:
+The documentation is built with [MyST](https://mystmd.org), configured in `myst.yml`. Its home page, `index.md`, shows the README, with the screencast embedded. The example notebooks are executed with the kernel:
 
 ```bash
 pixi run docs        # build the HTML in _build/html
