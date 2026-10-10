@@ -1,6 +1,7 @@
 # xeus-quickjs
 
 [![CI](https://github.com/jtpio/xeus-quickjs/actions/workflows/ci.yml/badge.svg)](https://github.com/jtpio/xeus-quickjs/actions/workflows/ci.yml)
+[![Documentation](https://readthedocs.org/projects/xeus-quickjs/badge/?version=latest)](https://xeus-quickjs.readthedocs.io/en/latest/)
 [![Try it in JupyterLite](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jtp.io/xeus-quickjs/lab/index.html)
 
 `xeus-quickjs` is a Jupyter kernel for JavaScript based on [QuickJS](https://bellard.org/quickjs/), the small and
@@ -89,7 +90,8 @@ slider
 
 ## Documentation
 
-The documentation, in the `docs` folder, is built with [MyST](https://mystmd.org): `pixi run docs`.
+The documentation is on [Read the Docs](https://xeus-quickjs.readthedocs.io). It is in the `docs` folder, and built
+with [MyST](https://mystmd.org): `pixi run docs`.
 
 ## Tests
 

@@ -22,7 +22,9 @@ QuickJS supports the latest ECMAScript features, like modules, async generators,
 
 ## Getting started
 
-From a clone of the repository:
+The kernel can be tried without installing anything, in the browser with [JupyterLite](https://jtp.io/xeus-quickjs/lab/index.html).
+
+To run it in JupyterLab, from a clone of the repository:
 
 ```bash
 pixi run lab
