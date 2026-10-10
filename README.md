@@ -105,6 +105,8 @@ pixi run lite-ui-tests
 
 # The screencasts of the features, in ui-tests/screencast-results
 pixi run screencasts
+
+# The screencast of the README, in ui-tests/screencast-results/jupyterlite.mp4
 pixi run lite-screencast
 ```
 

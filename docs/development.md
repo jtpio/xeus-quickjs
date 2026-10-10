@@ -62,7 +62,15 @@ pixi run screencasts
 pixi run screencasts -g widgets
 ```
 
-The scenarios are in `ui-tests/screencast/features.screencast.ts`, and the one of JupyterLite in `ui-tests/lite/jupyterlite.screencast.ts` (`pixi run lite-screencast`). The frames are captured with the screencast API of Chromium, and encoded in H.264 with ffmpeg.
+The scenarios are in `ui-tests/screencast/features.screencast.ts`. The frames are captured with the screencast API of Chromium, and encoded in H.264 with ffmpeg.
+
+The screencast of the README is a tour of the `xeus-quickjs.ipynb` notebook in JupyterLite, in `ui-tests/lite/jupyterlite.screencast.ts`:
+
+```bash
+pixi run lite-screencast
+```
+
+The **Screencast** workflow records it on GitHub Actions too, and uploads `jupyterlite.mp4` as an artifact. To update the README, upload the video in a comment of a pull request, and replace the link to the video in the README with the new one.
 
 ## Documentation
 

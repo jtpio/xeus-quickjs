@@ -17,7 +17,7 @@ module.exports = {
     // Without it, the screencast frames are captured at the viewport size,
     // whatever the device scale factor.
     launchOptions: { args: [`--force-device-scale-factor=${scale}`] },
-    viewport: { width: 1280, height: 800 },
+    viewport: { width: 1280, height: 720 },
     deviceScaleFactor: scale,
     trace: 'off',
     video: 'off'

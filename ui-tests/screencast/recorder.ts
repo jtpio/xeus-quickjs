@@ -243,10 +243,13 @@ export class Pointer {
     protected position = { x: 0, y: 0 }
   ) {}
 
+  /**
+   * Move the pointer to an element, and return whether it moved.
+   */
   async moveTo(
     target: Locator,
     options: { offset?: { x: number; y: number } } = {}
-  ): Promise<void> {
+  ): Promise<boolean> {
     await target.scrollIntoViewIfNeeded();
     const box = await target.boundingBox();
     if (!box) {
@@ -260,6 +263,9 @@ export class Pointer {
     const dx = end.x - start.x;
     const dy = end.y - start.y;
     const distance = Math.hypot(dx, dy);
+    if (distance < 1) {
+      return false;
+    }
     const duration = Math.min(350 + distance * 0.6, 1000);
     // Bend the path a little bit, perpendicular to the straight line
     const bend = Math.min(distance * 0.08, 40);
@@ -281,14 +287,16 @@ export class Pointer {
       await sleep(16);
     }
     this.position = end;
+    return true;
   }
 
   async click(
     target: Locator,
     options: { offset?: { x: number; y: number } } = {}
   ): Promise<void> {
-    await this.moveTo(target, options);
-    await sleep(150);
+    if (await this.moveTo(target, options)) {
+      await sleep(150);
+    }
     await target.click({
       delay: 60,
       position: options.offset
