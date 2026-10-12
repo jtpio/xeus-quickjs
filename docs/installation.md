@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-`xeus-quickjs` is built from source. Its dependencies come from [conda-forge](https://conda-forge.org): the C and C++ compilers and CMake, [xeus](https://github.com/jupyter-xeus/xeus) and [xeus-zmq](https://github.com/jupyter-xeus/xeus-zmq). The latest release of [QuickJS](https://bellard.org/quickjs/), 2026-06-04, is downloaded and built with the kernel.
+`xeus-quickjs` is built from source, on Linux and macOS. Its dependencies come from [conda-forge](https://conda-forge.org): the C and C++ compilers and CMake, [xeus](https://github.com/jupyter-xeus/xeus) and [xeus-zmq](https://github.com/jupyter-xeus/xeus-zmq). The latest release of [QuickJS](https://bellard.org/quickjs/), 2026-06-04, is downloaded and built with the kernel.
 
 ## With pixi
 

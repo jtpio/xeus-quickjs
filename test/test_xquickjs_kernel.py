@@ -173,9 +173,10 @@ class XQuickJSTests(jupyter_kernel_test.KernelTests):
         self.assertEqual(result, "'done'")
 
     def test_timers(self):
+        # The delays leave room for the sleeps of slow CI runners
         code = "\n".join([
-            "setTimeout(() => console.log('second'), 100);",
-            "setTimeout(() => console.log('first'), 50);",
+            "setTimeout(() => console.log('second'), 300);",
+            "setTimeout(() => console.log('first'), 200);",
             "let ticks = 0;",
             "const id = setInterval(() => { if (++ticks === 3) { clearInterval(id); console.log('ticks', ticks) } }, 10);",
             "'sync'",
