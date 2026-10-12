@@ -227,14 +227,14 @@ namespace xquickjs
             });
         }
 
-#if defined(__GLIBC__)
-        ssize_t write_redirected_stream(void* cookie, const char* buffer, size_t size)
+#if defined(__GLIBC__) || defined(__APPLE__)
+        size_t write_redirected(void* cookie, const char* buffer, size_t size)
         {
             auto* redirection = static_cast<interpreter::stream_redirection*>(cookie);
             // Only the code running in the main thread belongs to the cells
             if (std::this_thread::get_id() != redirection->m_thread_id)
             {
-                return static_cast<ssize_t>(std::fwrite(buffer, 1, size, redirection->p_original));
+                return std::fwrite(buffer, 1, size, redirection->p_original);
             }
             try
             {
@@ -243,13 +243,30 @@ namespace xquickjs
             catch (const std::exception&)
             {
             }
-            return static_cast<ssize_t>(size);
+            return size;
         }
+
+#if defined(__GLIBC__)
+        ssize_t write_redirected_stream(void* cookie, const char* buffer, size_t size)
+        {
+            return static_cast<ssize_t>(write_redirected(cookie, buffer, size));
+        }
+#else
+        int write_redirected_stream(void* cookie, const char* buffer, int size)
+        {
+            return static_cast<int>(write_redirected(cookie, buffer, static_cast<size_t>(size)));
+        }
+#endif
 
         FILE* open_redirected_stream(interpreter::stream_redirection& redirection)
         {
+#if defined(__GLIBC__)
             cookie_io_functions_t functions = { nullptr, write_redirected_stream, nullptr, nullptr };
             FILE* stream = fopencookie(&redirection, "w", functions);
+#else
+            // The BSD counterpart of fopencookie
+            FILE* stream = funopen(&redirection, nullptr, write_redirected_stream, nullptr, nullptr);
+#endif
             if (stream != nullptr)
             {
                 std::setvbuf(stream, nullptr, _IONBF, 0);
@@ -509,10 +526,10 @@ namespace xquickjs
 
     void interpreter::redirect_output()
     {
-#if defined(__GLIBC__)
-        // The C streams are global variables in the GNU C library: the
-        // functions of quickjs-libc pick up the redirected streams, while
-        // the C++ streams keep the original ones.
+#if defined(__GLIBC__) || defined(__APPLE__)
+        // The C streams are global variables in the GNU C library and on
+        // macOS: the functions of quickjs-libc pick up the redirected
+        // streams, while the C++ streams keep the original ones.
         m_stdout_redirection.p_original = stdout;
         m_stdout_redirection.m_thread_id = std::this_thread::get_id();
         m_stderr_redirection.p_original = stderr;
@@ -531,7 +548,7 @@ namespace xquickjs
 
     void interpreter::restore_output()
     {
-#if defined(__GLIBC__)
+#if defined(__GLIBC__) || defined(__APPLE__)
         if (p_original_stdout != nullptr)
         {
             std::fflush(stdout);

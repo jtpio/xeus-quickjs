@@ -16,8 +16,13 @@ permissions:
 
 jobs:
   test:
-    name: Kernel tests
-    runs-on: ubuntu-latest
+    name: Kernel tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Linux, and macOS on Apple silicon
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v7
 
@@ -32,8 +37,13 @@ jobs:
         run: pixi run test
 
   ui-tests:
-    name: JupyterLab UI tests
-    runs-on: ubuntu-latest
+    name: JupyterLab UI tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Linux, and macOS on Apple silicon
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v7
 
@@ -57,7 +67,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: ui-tests-report
+          name: ui-tests-report-${{ matrix.os }}
           path: |
             ui-tests/playwright-report
             ui-tests/test-results

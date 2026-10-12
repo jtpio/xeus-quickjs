@@ -31,7 +31,7 @@ https://github.com/user-attachments/assets/1baf37bb-121d-4731-875b-766d18476421
 
 ## Installation
 
-`xeus-quickjs` is built from source, with its dependencies from conda-forge. The latest release of QuickJS, 2026-06-04,
+`xeus-quickjs` is built from source, on Linux and macOS, with its dependencies from conda-forge. The latest release of QuickJS, 2026-06-04,
 is downloaded and built with the kernel. The simplest way is to use
 [pixi](https://pixi.sh), which creates an environment in the `.pixi` folder of the repository:
 

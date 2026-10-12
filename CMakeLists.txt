@@ -100,7 +100,12 @@ else ()
     FetchContent_MakeAvailable(quickjs)
 
     set(QuickJS_VERSION "${XEUS_QUICKJS_QUICKJS_RELEASE}")
-    set(QuickJS_INCLUDE_DIR "${quickjs_SOURCE_DIR}")
+    # The public headers get their own directory: on a case-insensitive file
+    # system, like on macOS, the VERSION file of the sources would shadow the
+    # <version> header of the C++ standard library
+    set(QuickJS_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/quickjs-include")
+    file(COPY ${quickjs_SOURCE_DIR}/quickjs.h ${quickjs_SOURCE_DIR}/quickjs-libc.h
+         DESTINATION ${QuickJS_INCLUDE_DIR})
     message(STATUS "Building QuickJS ${QuickJS_VERSION}")
 
     # The objects of libquickjs.a, from the Makefile of QuickJS
@@ -119,7 +124,7 @@ else ()
         target_compile_options(quickjs PRIVATE -fwrapv -w)
     endif ()
     target_include_directories(quickjs SYSTEM PUBLIC
-                               $<BUILD_INTERFACE:${quickjs_SOURCE_DIR}>
+                               $<BUILD_INTERFACE:${QuickJS_INCLUDE_DIR}>
                                $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/xeus-quickjs>)
     if (UNIX AND NOT EMSCRIPTEN)
         target_link_libraries(quickjs PUBLIC m ${CMAKE_DL_LIBS} Threads::Threads)
