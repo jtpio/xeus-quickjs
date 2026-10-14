@@ -2,7 +2,7 @@
 title: Installation
 ---
 
-`xeus-quickjs` is built from source, on Linux and macOS. Its dependencies come from [conda-forge](https://conda-forge.org): the C and C++ compilers and CMake, [xeus](https://github.com/jupyter-xeus/xeus) and [xeus-zmq](https://github.com/jupyter-xeus/xeus-zmq). The latest release of [QuickJS](https://bellard.org/quickjs/), 2026-06-04, is downloaded and built with the kernel.
+`xeus-quickjs` is built from source, on Linux and macOS. Its dependencies come from [conda-forge](https://conda-forge.org): the C and C++ compilers and CMake, [xeus](https://github.com/jupyter-xeus/xeus), [xeus-zmq](https://github.com/jupyter-xeus/xeus-zmq) and the latest release of [QuickJS](https://bellard.org/quickjs/), 2026-06-04.
 
 ## With pixi
 
@@ -23,7 +23,7 @@ The kernel is installed in the environment, in `.pixi/envs/default/share/jupyter
 Create an environment with the dependencies:
 
 ```bash
-mamba create -n xeus-quickjs -c conda-forge cmake ninja c-compiler cxx-compiler "xeus>=6.0.6,<7" "xeus-zmq>=4,<5" nlohmann_json jupyterlab jupyterlab_widgets
+mamba create -n xeus-quickjs -c conda-forge cmake ninja c-compiler cxx-compiler "xeus>=6.0.6,<7" "xeus-zmq>=4,<5" nlohmann_json "quickjs>=2026.06.04" jupyterlab jupyterlab_widgets
 mamba activate xeus-quickjs
 ```
 
@@ -41,7 +41,7 @@ cmake --install build
 
 ## In JupyterLite
 
-The kernel can be built for WebAssembly with [emscripten](https://emscripten.org), and run in the browser by [JupyterLite](https://jupyterlite.readthedocs.io), without server. Two pixi environments hold the dependencies of this build: `wasm-host` has the libraries of the kernel built for WebAssembly, from [emscripten-forge](https://emscripten-forge.org) (xeus and xeus-lite), and `wasm-build` has the emscripten toolchain, JupyterLite and [jupyterlite-xeus](https://github.com/jupyterlite/xeus).
+The kernel can be built for WebAssembly with [emscripten](https://emscripten.org), and run in the browser by [JupyterLite](https://jupyterlite.readthedocs.io), without server. Two pixi environments hold the dependencies of this build: `wasm-host` has the libraries of the kernel built for WebAssembly, from [emscripten-forge](https://emscripten-forge.org) (xeus and xeus-lite; QuickJS is not packaged there, so CMake downloads and builds it), and `wasm-build` has the emscripten toolchain, JupyterLite and [jupyterlite-xeus](https://github.com/jupyterlite/xeus).
 
 ```bash
 # Build the kernel for WebAssembly, in the wasm-host environment
@@ -69,7 +69,7 @@ In JupyterLite, the kernel runs in a web worker. It has the same features as the
 | `XEUS_QUICKJS_BUILD_EXECUTABLE` | `ON` | Build the `xquickjs` kernel |
 | `XEUS_QUICKJS_USE_SHARED_XEUS` | `ON` | Link with the shared library of xeus |
 | `XEUS_QUICKJS_USE_SHARED_XEUS_QUICKJS` | `ON` | Link the kernel with the shared library of xeus-quickjs |
-| `XEUS_QUICKJS_USE_SYSTEM_QUICKJS` | `OFF` | Use an installed QuickJS, like the `quickjs` package of conda-forge, instead of building it |
+| `XEUS_QUICKJS_USE_SYSTEM_QUICKJS` | `ON` (`OFF` for WebAssembly) | Use an installed QuickJS, like the `quickjs` package of conda-forge, instead of downloading and building it |
 | `XEUS_QUICKJS_KERNELSPEC_PATH` | `<prefix>/bin/` | Directory of the kernel in the kernel specification |
 
 The WebAssembly build only builds the static library and the kernel.

@@ -50,7 +50,15 @@ option(XEUS_QUICKJS_BUILD_EXECUTABLE "Build the xquickjs executable" ON)
 
 option(XEUS_QUICKJS_USE_SHARED_XEUS "Link xquickjs with the xeus shared library (instead of the static library)" ON)
 option(XEUS_QUICKJS_USE_SHARED_XEUS_QUICKJS "Link xquickjs with the xeus-quickjs shared library (instead of the static library)" ON)
-option(XEUS_QUICKJS_USE_SYSTEM_QUICKJS "Link with an installed QuickJS, like the quickjs package of conda-forge, instead of building it" OFF)
+# The native build uses an installed QuickJS, like the quickjs package of
+# conda-forge. emscripten-forge has no QuickJS package yet, so the WebAssembly
+# build downloads and builds it.
+if (EMSCRIPTEN)
+    set(XEUS_QUICKJS_USE_SYSTEM_QUICKJS_DEFAULT OFF)
+else ()
+    set(XEUS_QUICKJS_USE_SYSTEM_QUICKJS_DEFAULT ON)
+endif ()
+option(XEUS_QUICKJS_USE_SYSTEM_QUICKJS "Link with an installed QuickJS, like the quickjs package of conda-forge, instead of building it" ${XEUS_QUICKJS_USE_SYSTEM_QUICKJS_DEFAULT})
 
 if (EMSCRIPTEN)
     # The kernel of JupyterLite is a single WebAssembly module, using xeus-lite
@@ -79,8 +87,8 @@ endif ()
 # QuickJS
 # =======
 
-# The latest release of QuickJS is built from source by default, for the
-# native and WebAssembly builds.
+# The release of QuickJS built from source when XEUS_QUICKJS_USE_SYSTEM_QUICKJS
+# is OFF, like for the WebAssembly build.
 set(XEUS_QUICKJS_QUICKJS_RELEASE "2026-06-04")
 set(XEUS_QUICKJS_QUICKJS_SHA256 "b376e839b322978313d929fd20663b11ba58b75df5a46c126dd19ea2fa70ad2a")
 
