@@ -9,7 +9,7 @@ title: Development
 - **The interpreter** (`src/xinterpreter.cpp`), a [xeus](https://github.com/jupyter-xeus/xeus) interpreter written in C++. It owns the QuickJS runtime, runs the event loop of the cells (promise jobs and timers), handles the interruptions and the comms, and sends the outputs to the frontend.
 - **The runtime** (`src/js/runtime.js` and `src/js/widgets.js`), written in JavaScript and embedded in the library at build time. It defines the globals of the notebooks (`console`, `display`, the timers, the widgets...), formats the values, rewrites the cells, and answers the completion and inspection requests.
 
-QuickJS is built from its release tarball, downloaded by CMake. The WebAssembly build links the kernel with xeus-lite instead of xeus-zmq (`src/main_emscripten_kernel.cpp`), and `src/emscripten/pre.js` sends what QuickJS writes on its standard streams to the notebook.
+The native kernel links with the `quickjs` package of conda-forge. For the WebAssembly build, CMake downloads the release tarball of QuickJS and builds it, since emscripten-forge has no QuickJS package. The WebAssembly build links the kernel with xeus-lite instead of xeus-zmq (`src/main_emscripten_kernel.cpp`), and `src/emscripten/pre.js` sends what QuickJS writes on its standard streams to the notebook.
 
 The kernel uses the `xserver_shell_main` server of xeus-zmq: the code runs in the main thread while the control channel has its own thread, so that an interrupt request reaches a busy kernel. The interrupt handler of QuickJS then stops the running code with an uncatchable error. The kernel specification sets `interrupt_mode` to `message`, and `SIGINT` interrupts the code too.
 

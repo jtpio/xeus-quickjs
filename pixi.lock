@@ -157,6 +157,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/pulseaudio-client-17.0-hb10c1b2_4.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/python-3.15.0-h6e52b48_100_cp315.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/pyzmq-27.2.0-py312h8a5ba0d_2.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/quickjs-2026.06.04-hebe6cf0_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/rhash-1.4.6-hb03c661_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/rpds-py-2026.9.1-py315h80d437b_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/sdl2-2.32.56-h54a6638_0.conda
@@ -557,6 +558,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/pyobjc-framework-cocoa-12.2.2-py315h7dd06d3_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/python-3.15.0-h2e4dbab_100_cp315.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/pyzmq-27.2.0-py312hdfb5542_2.conda
+      - conda: https://conda.anaconda.org/conda-forge/osx-arm64/quickjs-2026.06.04-h74c22ad_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/rhash-1.4.6-h84a0fba_2.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/rpds-py-2026.9.1-py315hbde48c7_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-arm64/sdl2-2.32.56-h784d473_0.conda
@@ -2887,6 +2889,16 @@ packages:
   run_exports: {}
   size: 216556
   timestamp: 1789730121925
+- conda: https://conda.anaconda.org/conda-forge/linux-64/quickjs-2026.06.04-hebe6cf0_0.conda
+  sha256: 05e48429b1330cc9543de560813da12bee7ef91b3f70a197a5e135d06db364f6
+  md5: 4ca5df014b753ad8433c218b8f2790ea
+  depends:
+  - __glibc >=2.17,<3.0.a0
+  - libgcc >=15
+  license: MIT
+  run_exports: {}
+  size: 2634455
+  timestamp: 1791989197604
 - conda: https://conda.anaconda.org/conda-forge/linux-64/rhash-1.4.6-hb03c661_2.conda
   sha256: 186a5b225077ad5f4656966da947d43307101950751ef4a239b455588756b4e1
   md5: 007602d697e07c11ff9864964eba5ee3
@@ -7012,6 +7024,15 @@ packages:
   run_exports: {}
   size: 197695
   timestamp: 1789730185188
+- conda: https://conda.anaconda.org/conda-forge/osx-arm64/quickjs-2026.06.04-h74c22ad_0.conda
+  sha256: e07d5a0d2432b6bafdbee1ae66f27d90af9e8533c1eecee8df0128b1d36dee26
+  md5: 5c3c988789e4e2ad8aa7bd1a3b6430c5
+  depends:
+  - __osx >=11.0
+  license: MIT
+  run_exports: {}
+  size: 1991356
+  timestamp: 1791989443366
 - conda: https://conda.anaconda.org/conda-forge/osx-arm64/rhash-1.4.6-h84a0fba_2.conda
   sha256: b4da3ab88c407b4133d39512b3b615d6fb020c89d39f54491862e6731528ab95
   md5: 5cec61f5b18ca8c5bbb1ad2dc5923a8e

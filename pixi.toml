@@ -4,7 +4,8 @@ description = "Jupyter kernel for JavaScript based on QuickJS and the native imp
 channels = ["conda-forge"]
 platforms = ["linux-64", "osx-arm64", "emscripten-wasm32"]
 
-# The kernel builds QuickJS from source, see CMakeLists.txt
+# The native kernel uses the quickjs package of conda-forge. The WebAssembly
+# build downloads and builds QuickJS, see CMakeLists.txt
 
 # The native kernel, on Linux and macOS
 [feature.native]
@@ -20,6 +21,7 @@ c-compiler = "*"
 xeus = ">=6.0.6,<7"
 xeus-zmq = ">=4.0,<5"
 nlohmann_json = ">=3.12,<4"
+quickjs = ">=2026.06.04"
 # To try it out
 jupyterlab = ">=4.6,<5"
 jupyterlab_widgets = ">=3.0.17,<4"
